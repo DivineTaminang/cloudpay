@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+
+  tasks:
+  - name: login to dockerhub
+    command: docker login -u divineking -p EncounterJ1
+
+  - name: remove the images
+    command: docker rmi divineking/cloudpayimage:v1 cloudpayimage:v1
+    ignore_errors: yes
+
+  - name: Docker build of image
+    command: docker build -t cloudpayimage:v1 .
+    args:
+      chdir: /opt/docker
+
+  - name: tag docker image
+    command: docker tag cloudpayimage:v1 divineking/cloudpayimage:v1
+
+  - name: push the docker image to dockerhub registry
+    command: docker push divineking/cloudpayimage:v1
