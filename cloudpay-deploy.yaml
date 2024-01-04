@@ -1,21 +1,21 @@
 ---
-- hosts: localhost
+- hosts: docker_host
 
   tasks:
-  - name: login to dockerhub
-    command: docker login -u divineking -p EncounterJ1
-
-  - name: remove the images
-    command: docker rmi divineking/cloudpayimage:v1 cloudpayimage:v1
+  - name: stop existing docker container
+    command: docker stop cloudpayapps
     ignore_errors: yes
-
-  - name: Docker build of image
-    command: docker build -t cloudpayimage:v1 .
-    args:
-      chdir: /opt/docker
-
-  - name: tag docker image
-    command: docker tag cloudpayimage:v1 divineking/cloudpayimage:v1
-
-  - name: push the docker image to dockerhub registry
-    command: docker push divineking/cloudpayimage:v1
+  - name: remove the  container
+    command: docker rm cloudpayapps
+    ignore_errors: yes
+  - name: remove the containers
+    command: docker system prune -a -f
+    ignore_errors: yes
+    #- name: removing html file
+    #command: rm -rf /opt/docker/index.html
+    #ignore_errors: yes
+  - name: pull the docker image
+    command: docker pull divineking/cloudpayimage:v1
+  - name: create container 
+    #command: sudo docker run -it --rm -v /opt/docker:/usr/local/apache2/htdocs/ -d --name cloudpayapps -p 8095:80 divineking/cloudpayimage:v1
+    command: docker run -d --name cloudpayapps -p 8095:80 divineking/cloudpayimage:v1
