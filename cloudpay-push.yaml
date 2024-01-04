@@ -14,7 +14,7 @@
     args:
       chdir: /opt/docker
 
-  - name: tag docker image
+  - name: tagging docker image
     command: docker tag cloudpayimage:v1 divineking/cloudpayimage:v1
 
   - name: push the docker image to dockerhub registry
