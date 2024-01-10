@@ -3,7 +3,7 @@
 
   tasks:
   - name: login to dockerhub
-    command: docker login -u divineking -p EncounterJ1
+    command: docker login -u d-p 
 
   - name: remove the images
     command: docker rmi divineking/cloudpayimage:v1 cloudpayimage:v1
